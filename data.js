@@ -681,7 +681,7 @@ const GAME_DATA = {
             "¡Tictac tictac! ¡El reloj corre como el contador del cole!",
             "¡SPRINT ENERGÉTICO! ¡Dale gas! Bueno, mejor dale solar.",
             "¡RÁPIDO! ¡La factura crece mientras lees esto!",
-            "¡A TOPE! ¡Como las 200 estufas del aula de ciencias!"
+            "¡A TOPE! ¡Como las 200 estufas del aula de sexto!"
         ],
         pocasVidas: [
             "Uy, te quedan pocas oportunidades... como a mí para quedarme en el cole.",
@@ -699,7 +699,7 @@ const GAME_DATA = {
             "¡La ciudad parece mi cocina cuando encendí las 200 estufas!",
             "¡ALERTA ROJA! ¡Más humo que una central de carbón!",
             "¡La contaminación sube más rápido que mi factura!",
-            "¡A este ritmo, la ciudad será inhabitable! Como el aula de ciencias con las 200 estufas."
+            "¡A este ritmo, la ciudad será inhabitable! Como el aula de sexto con las 200 estufas."
         ],
         nivelSuperado: [
             "¡Has pasado el nivel! ¡La dire me deja una semana más!",
@@ -762,7 +762,7 @@ const GAME_DATA = {
             "¡SENSACIONAL: Alumno del cole sabe qué es renovable y qué no!",
             "HISTÓRICO: Primera vez que un alumno del Profe Álvaro NO suspende.",
             "EN DIRECTO: La directora Paloma del Colegio Perú persigue al Profe Álvaro por los pasillos.",
-            "FLASH: Las 200 estufas del aula de ciencias piden derechos laborales.",
+            "FLASH: Las 200 estufas del aula de sexto piden derechos laborales.",
             "ÚLTIMA HORA: Compañía eléctrica nombra al Colegio Perú 'Cliente del Siglo'."
         ]
     },
@@ -809,7 +809,7 @@ const GAME_DATA = {
             { personaje: "profesor", texto: "¡Buenos días, dire! ¿Qué pasa? ¿He hecho algo?" },
             { personaje: "narrador", texto: "La directora le enseña una factura de la luz del colegio..." },
             { personaje: "profesor", texto: "¡¿CUARENTA Y SIETE MIL EUROS?! Pero... ¿cómo...?" },
-            { personaje: "narrador", texto: "'Álvaro, tus 200 estufas en el aula de ciencias. DOSCIENTAS.'" },
+            { personaje: "narrador", texto: "'Álvaro, tus 200 estufas en el aula de sexto. DOSCIENTAS.'" },
             { personaje: "profesor", texto: "¡Es que hacía frío! Solo quería que mis alumnos estuvieran calentitos..." },
             { personaje: "narrador", texto: "'O tus alumnos pagan esa factura aprendiendo sobre energía, o estás despedido.'" },
             { personaje: "profesor", texto: "Alumnos... ¡VOSOTROS vais a sacarme de esta! ¡VAIS A APRENDER ENERGÍA!" },

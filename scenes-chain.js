@@ -435,7 +435,7 @@ class TransformationScene extends Phaser.Scene {
         ]));
 
         // Show correct answer after delay
-        this.time.delayedCall(1200, () => {
+        this.time.delayedCall(2000, () => {
             // Show the correct sequence
             this.showExplanation(this.currentChain, false);
         });

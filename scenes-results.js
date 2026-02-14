@@ -317,7 +317,7 @@ class FinalScene extends Phaser.Scene {
     }
 
     showCommonUI(isVictory) {
-        const buttonY = isVictory ? 555 : 530;
+        const buttonY = isVictory ? 575 : 555;
 
         // Buttons row
         this.createSmallButton(150, buttonY, 'MENÚ', '#3b82f6', () => {
@@ -337,7 +337,7 @@ class FinalScene extends Phaser.Scene {
 
         // Name input for leaderboard
         if (this.score > 0) {
-            const inputY = isVictory ? 400 : 350;
+            const inputY = isVictory ? 385 : 340;
             this.showNameInput(inputY);
         }
     }
@@ -352,28 +352,15 @@ class FinalScene extends Phaser.Scene {
 
         const inputBg = this.add.graphics();
         inputBg.fillStyle(0x1e293b, 1);
-        inputBg.fillRoundedRect(-120, -16, 200, 32, 8);
+        inputBg.fillRoundedRect(-120, -16, 240, 32, 8);
         inputBg.lineStyle(2, 0x3b82f6);
-        inputBg.strokeRoundedRect(-120, -16, 200, 32, 8);
+        inputBg.strokeRoundedRect(-120, -16, 240, 32, 8);
 
-        this.nameDisplay = this.add.text(-20, 0, '_', {
+        this.nameDisplay = this.add.text(0, 0, '_', {
             fontFamily: 'Nunito', fontSize: '16px', fontStyle: 'bold', color: '#ffffff'
         }).setOrigin(0.5);
 
-        // Save button
-        const saveBtn = this.add.container(110, 0);
-        const saveBg = this.add.graphics();
-        saveBg.fillStyle(0x22c55e, 1);
-        saveBg.fillRoundedRect(-30, -14, 60, 28, 6);
-        const saveText = this.add.text(0, 0, 'OK', {
-            fontFamily: 'Nunito', fontSize: '14px', fontStyle: 'bold', color: '#ffffff'
-        }).setOrigin(0.5);
-        saveBtn.add([saveBg, saveText]);
-        saveBtn.setSize(60, 28);
-        saveBtn.setInteractive();
-        saveBtn.on('pointerdown', () => this.saveName());
-
-        this.nameContainer.add([inputBg, this.nameDisplay, saveBtn]);
+        this.nameContainer.add([inputBg, this.nameDisplay]);
 
         // Virtual keyboard
         this.createNameKeyboard(baseY + 70);
@@ -403,20 +390,20 @@ class FinalScene extends Phaser.Scene {
             for (let i = 0; i < row.length; i++) {
                 const key = row[i];
                 const x = startX + i * 30;
-                const y = rowIndex * 34 - 34;
+                const y = rowIndex * 32 - 32;
 
                 const keyBtn = this.add.container(x, y);
                 const keyBg = this.add.graphics();
                 keyBg.fillStyle(0x1e293b, 1);
-                keyBg.fillRoundedRect(-13, -14, 26, 28, 4);
+                keyBg.fillRoundedRect(-13, -13, 26, 26, 4);
                 keyBg.lineStyle(1, 0x475569);
-                keyBg.strokeRoundedRect(-13, -14, 26, 28, 4);
+                keyBg.strokeRoundedRect(-13, -13, 26, 26, 4);
                 const keyText = this.add.text(0, 0, key, {
                     fontFamily: 'Nunito', fontSize: '12px', fontStyle: 'bold', color: '#94a3b8'
                 }).setOrigin(0.5);
 
                 keyBtn.add([keyBg, keyText]);
-                keyBtn.setSize(26, 28);
+                keyBtn.setSize(26, 26);
                 keyBtn.setInteractive();
 
                 keyBtn.on('pointerdown', () => {
@@ -434,18 +421,18 @@ class FinalScene extends Phaser.Scene {
             }
         });
 
-        // Delete button
-        const delBtn = this.add.container(130, 34);
+        // Delete button (right of last row)
+        const delBtn = this.add.container(125, 32);
         const delBg = this.add.graphics();
         delBg.fillStyle(0x1e293b, 1);
-        delBg.fillRoundedRect(-25, -14, 50, 28, 4);
+        delBg.fillRoundedRect(-25, -13, 50, 26, 4);
         delBg.lineStyle(1, 0xef4444);
-        delBg.strokeRoundedRect(-25, -14, 50, 28, 4);
+        delBg.strokeRoundedRect(-25, -13, 50, 26, 4);
         const delText = this.add.text(0, 0, 'DEL', {
             fontFamily: 'Nunito', fontSize: '11px', fontStyle: 'bold', color: '#ef4444'
         }).setOrigin(0.5);
         delBtn.add([delBg, delText]);
-        delBtn.setSize(50, 28);
+        delBtn.setSize(50, 26);
         delBtn.setInteractive();
         delBtn.on('pointerdown', () => {
             this.nameInput = this.nameInput.slice(0, -1);
@@ -460,20 +447,20 @@ class FinalScene extends Phaser.Scene {
         for (let i = 0; i < numRow.length; i++) {
             const key = numRow[i];
             const x = numStartX + i * 30;
-            const y = -68;
+            const y = -64;
 
             const keyBtn = this.add.container(x, y);
             const keyBg = this.add.graphics();
             keyBg.fillStyle(0x1e293b, 1);
-            keyBg.fillRoundedRect(-13, -14, 26, 28, 4);
+            keyBg.fillRoundedRect(-13, -13, 26, 26, 4);
             keyBg.lineStyle(1, 0x475569);
-            keyBg.strokeRoundedRect(-13, -14, 26, 28, 4);
+            keyBg.strokeRoundedRect(-13, -13, 26, 26, 4);
             const keyText = this.add.text(0, 0, key, {
                 fontFamily: 'Nunito', fontSize: '12px', fontStyle: 'bold', color: '#94a3b8'
             }).setOrigin(0.5);
 
             keyBtn.add([keyBg, keyText]);
-            keyBtn.setSize(26, 28);
+            keyBtn.setSize(26, 26);
             keyBtn.setInteractive();
 
             keyBtn.on('pointerdown', () => {
@@ -488,6 +475,33 @@ class FinalScene extends Phaser.Scene {
 
             this.keyboard.add(keyBtn);
         }
+
+        // Big ENVIAR button at the bottom of the keyboard
+        const enterBtn = this.add.container(0, 68);
+        const enterBg = this.add.graphics();
+        enterBg.fillStyle(0x22c55e, 1);
+        enterBg.fillRoundedRect(-100, -15, 200, 30, 6);
+        const enterText = this.add.text(0, 0, 'GUARDAR PUNTUACION', {
+            fontFamily: 'Nunito', fontSize: '13px', fontStyle: 'bold', color: '#ffffff'
+        }).setOrigin(0.5);
+        enterBtn.add([enterBg, enterText]);
+        enterBtn.setSize(200, 30);
+        enterBtn.setInteractive();
+        enterBtn.on('pointerdown', () => {
+            audioManager.playClick();
+            this.saveName();
+        });
+        enterBtn.on('pointerover', () => {
+            enterBg.clear();
+            enterBg.fillStyle(0x16a34a, 1);
+            enterBg.fillRoundedRect(-100, -15, 200, 30, 6);
+        });
+        enterBtn.on('pointerout', () => {
+            enterBg.clear();
+            enterBg.fillStyle(0x22c55e, 1);
+            enterBg.fillRoundedRect(-100, -15, 200, 30, 6);
+        });
+        this.keyboard.add(enterBtn);
     }
 
     createSmallButton(x, y, text, color, callback) {

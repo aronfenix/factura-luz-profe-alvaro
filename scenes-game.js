@@ -121,7 +121,7 @@ class Level1Scene extends Phaser.Scene {
 
         // Timer
         this.canAnswer = true;
-        const timeForThis = Math.max(4, 8 - this.currentIndex * 0.28);
+        const timeForThis = Math.max(7, 12 - this.currentIndex * 0.25);
         this.timeLeft = timeForThis;
         this.maxTime = timeForThis;
         this.timerBar.width = 498;
@@ -257,7 +257,7 @@ class Level1Scene extends Phaser.Scene {
 
         achievementSystem.updateStats({ totalCorrect: 1, maxCombo: this.maxCombo });
 
-        this.time.delayedCall(1800, () => {
+        this.time.delayedCall(3500, () => {
             this.professor.setTexture('prof_idle_0');
             this.currentIndex++;
             this.showScenario();
@@ -316,7 +316,7 @@ class Level1Scene extends Phaser.Scene {
         this.showProfComment(this.currentScenario.explicacion.substring(0, 80) + '...');
         this.professor.setTexture('prof_angry_0');
 
-        this.time.delayedCall(2500, () => {
+        this.time.delayedCall(5000, () => {
             this.professor.setTexture('prof_idle_0');
             this.currentIndex++;
             this.showScenario();
@@ -724,10 +724,10 @@ class Level2Scene extends Phaser.Scene {
         panel.setScale(0);
         this.tweens.add({ targets: panel, scale: 1, duration: 300, ease: 'Back.easeOut' });
 
-        // Shrink timer bar over 5 seconds
-        this.tweens.add({ targets: timerFill, width: 0, duration: 5000, ease: 'Linear' });
+        // Shrink timer bar over 8 seconds
+        this.tweens.add({ targets: timerFill, width: 0, duration: 8000, ease: 'Linear' });
 
-        this.time.delayedCall(5000, () => {
+        this.time.delayedCall(8000, () => {
             overlay.destroy();
             panel.destroy();
             this.professor.setTexture('prof_idle_0');
@@ -1469,8 +1469,8 @@ class Level4Scene extends Phaser.Scene {
             this.professor.setTexture('prof_angry_0');
         }
 
-        // Close panel after 3 seconds
-        this.time.delayedCall(3000, () => {
+        // Close panel after 5 seconds
+        this.time.delayedCall(5000, () => {
             this.tweens.add({
                 targets: panel, scale: 0, duration: 200, ease: 'Back.easeIn',
                 onComplete: () => {
@@ -1530,7 +1530,7 @@ class Level5Scene extends Phaser.Scene {
         this.lives = data.lives !== undefined ? data.lives : 3;
         this.totalCorrect = data.totalCorrect || 0;
         this.bill = 47000;
-        this.globalTime = 180; // 3 minutes
+        this.globalTime = 240; // 4 minutes
         this.currentRetoIndex = 0;
         this.correctCount = 0;
     }
@@ -1558,7 +1558,7 @@ class Level5Scene extends Phaser.Scene {
         this.billBar = this.add.rectangle(151, 82, 498, 8, 0xef4444).setOrigin(0, 0.5);
 
         // Global timer
-        this.timerText = this.add.text(750, 55, '3:00', {
+        this.timerText = this.add.text(750, 55, '4:00', {
             fontFamily: 'Nunito', fontSize: '20px', fontStyle: '900', color: '#fbbf24'
         }).setOrigin(0.5);
 
@@ -1660,7 +1660,7 @@ class Level5Scene extends Phaser.Scene {
             });
         });
 
-        this.startRetoTimer(5);
+        this.startRetoTimer(8);
     }
 
     showRenovable(reto) {
@@ -1687,7 +1687,7 @@ class Level5Scene extends Phaser.Scene {
             this.handleRetoAnswer(reto.respuesta === false, 'renovable');
         }, 200, '#ef4444');
 
-        this.startRetoTimer(4);
+        this.startRetoTimer(7);
     }
 
     showMiniCadena(reto) {
@@ -1744,7 +1744,7 @@ class Level5Scene extends Phaser.Scene {
             this.stepButtons.push(btn);
         });
 
-        this.startRetoTimer(12);
+        this.startRetoTimer(18);
     }
 
     showPregunta(reto) {
@@ -1769,7 +1769,7 @@ class Level5Scene extends Phaser.Scene {
             });
         });
 
-        this.startRetoTimer(5);
+        this.startRetoTimer(8);
     }
 
     createSpeedButton(x, y, text, callback, w = 240, color = '#ffffff') {
@@ -1858,8 +1858,8 @@ class Level5Scene extends Phaser.Scene {
             // Check shield
             if (window.powerUpManager && powerUpManager.shouldAbsorbHit(this)) {
                 this.feedbackText.setText('Escudo!').setColor('#22c55e').setAlpha(1);
-                this.tweens.add({ targets: this.feedbackText, alpha: 0, delay: 800, duration: 500 });
-                this.time.delayedCall(1200, () => { this.currentRetoIndex++; this.showReto(); });
+                this.tweens.add({ targets: this.feedbackText, alpha: 0, delay: 1500, duration: 500 });
+                this.time.delayedCall(2500, () => { this.currentRetoIndex++; this.showReto(); });
                 return;
             }
             this.combo = 0;
@@ -1876,9 +1876,9 @@ class Level5Scene extends Phaser.Scene {
         if (this.bill < 10000) this.billBar.fillColor = 0x22c55e;
         if (this.bill <= 0) this.billBar.fillColor = 0x22c55e;
 
-        this.tweens.add({ targets: this.feedbackText, alpha: 0, delay: 800, duration: 500 });
+        this.tweens.add({ targets: this.feedbackText, alpha: 0, delay: 1500, duration: 500 });
 
-        this.time.delayedCall(1200, () => {
+        this.time.delayedCall(2500, () => {
             this.currentRetoIndex++;
             if (this.bill <= 0) { this.victoryEnd(); }
             else { this.showReto(); }
