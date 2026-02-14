@@ -102,7 +102,7 @@ class Level1Scene extends Phaser.Scene {
         }).setOrigin(0.5);
         this.scenarioContainer.add(text);
 
-        const hint = this.add.text(350, 330, '¿Qué tipo de energía es?', {
+        const hint = this.add.text(350, 330, 'Elige la energía más importante en este caso', {
             fontFamily: 'Nunito', fontSize: '13px', color: '#94a3b8'
         }).setOrigin(0.5);
         this.scenarioContainer.add(hint);

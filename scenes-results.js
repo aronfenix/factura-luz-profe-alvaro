@@ -241,7 +241,7 @@ class FinalScene extends Phaser.Scene {
         });
 
         // Epilogue
-        const epilogoBox = this.add.rectangle(400, 270, 700, 80, 0x0f172a, 0.95);
+        const epilogoBox = this.add.rectangle(400, 250, 700, 70, 0x0f172a, 0.95);
         epilogoBox.setStrokeStyle(3, 0x22c55e);
 
         const epilogos = [
@@ -252,18 +252,18 @@ class FinalScene extends Phaser.Scene {
         ];
         const epilogo = epilogos[Math.floor(Math.random() * epilogos.length)];
 
-        this.add.text(400, 270, epilogo, {
-            fontFamily: 'Nunito', fontSize: '14px', fontStyle: 'italic', color: '#ffffff',
-            align: 'center', lineSpacing: 8
+        this.add.text(400, 250, epilogo, {
+            fontFamily: 'Nunito', fontSize: '13px', fontStyle: 'italic', color: '#ffffff',
+            align: 'center', lineSpacing: 6
         }).setOrigin(0.5);
 
         // Score
-        this.add.text(400, 340, `PUNTUACIÓN FINAL: ${this.score}`, {
-            fontFamily: 'Nunito', fontSize: '22px', fontStyle: '900', color: '#fbbf24'
+        this.add.text(400, 310, `PUNTUACIÓN FINAL: ${this.score}`, {
+            fontFamily: 'Nunito', fontSize: '20px', fontStyle: '900', color: '#fbbf24'
         }).setOrigin(0.5);
 
-        this.add.text(400, 370, `Aciertos: ${this.totalCorrect}  |  Nivel: ${this.level}/5`, {
-            fontFamily: 'Nunito', fontSize: '13px', color: '#94a3b8'
+        this.add.text(400, 335, `Aciertos: ${this.totalCorrect}  |  Nivel: ${this.level}/5`, {
+            fontFamily: 'Nunito', fontSize: '12px', color: '#94a3b8'
         }).setOrigin(0.5);
 
         this.showCommonUI(true);
@@ -280,8 +280,8 @@ class FinalScene extends Phaser.Scene {
             gamesPlayed: 1
         });
 
-        // Professor laughing
-        this.professor = this.add.sprite(400, 100, 'prof_laugh_0').setScale(2.5);
+        // Professor laughing (smaller, top-left)
+        this.professor = this.add.sprite(80, 60, 'prof_laugh_0').setScale(1.5);
         this.time.addEvent({
             delay: 200,
             callback: () => {
@@ -291,24 +291,24 @@ class FinalScene extends Phaser.Scene {
             loop: true
         });
 
-        this.add.text(400, 200, 'APAGÓN TOTAL', {
-            fontFamily: 'Nunito', fontSize: '28px', fontStyle: '900', color: '#ef4444'
+        this.add.text(400, 30, 'APAGÓN TOTAL', {
+            fontFamily: 'Nunito', fontSize: '26px', fontStyle: '900', color: '#ef4444'
         }).setOrigin(0.5);
 
-        const subtitle = this.lives <= 0 ? 'Te has quedado sin vidas...' : 'No has superado el nivel... La dire está enfadada.';
-        this.add.text(400, 230, subtitle, {
-            fontFamily: 'Nunito', fontSize: '14px', color: '#94a3b8'
+        const subtitle = this.lives <= 0 ? 'Te has quedado sin vidas...' : 'No has superado el nivel...';
+        this.add.text(400, 58, subtitle, {
+            fontFamily: 'Nunito', fontSize: '13px', color: '#94a3b8'
         }).setOrigin(0.5);
 
-        this.add.text(400, 270,
+        this.add.text(400, 85,
             `Nivel: ${this.level}/5  |  Aciertos: ${this.totalCorrect}  |  Puntos: ${this.score}`, {
             fontFamily: 'Nunito', fontSize: '14px', fontStyle: 'bold', color: '#fbbf24', align: 'center'
         }).setOrigin(0.5);
 
         const phrase = GAME_DATA.frases.derrotaFinal[Math.floor(Math.random() * GAME_DATA.frases.derrotaFinal.length)];
-        this.add.text(400, 310, `"${phrase}"`, {
-            fontFamily: 'Nunito', fontSize: '14px', fontStyle: 'italic', color: '#ef4444',
-            align: 'center', wordWrap: { width: 600 }
+        this.add.text(400, 115, `"${phrase}"`, {
+            fontFamily: 'Nunito', fontSize: '13px', fontStyle: 'italic', color: '#ef4444',
+            align: 'center', wordWrap: { width: 650 }
         }).setOrigin(0.5);
 
         this.showCommonUI(false);
@@ -317,7 +317,7 @@ class FinalScene extends Phaser.Scene {
     }
 
     showCommonUI(isVictory) {
-        const buttonY = isVictory ? 575 : 555;
+        const buttonY = 580;
 
         // Buttons row
         this.createSmallButton(150, buttonY, 'MENÚ', '#3b82f6', () => {
@@ -337,33 +337,33 @@ class FinalScene extends Phaser.Scene {
 
         // Name input for leaderboard
         if (this.score > 0) {
-            const inputY = isVictory ? 385 : 340;
+            const inputY = isVictory ? 360 : 155;
             this.showNameInput(inputY);
         }
     }
 
     showNameInput(baseY) {
-        this.add.text(400, baseY, 'Introduce tu nombre para el ranking:', {
+        this.add.text(400, baseY, 'Escribe tu nombre para el ranking:', {
             fontFamily: 'Nunito', fontSize: '13px', color: '#94a3b8'
         }).setOrigin(0.5);
 
         this.nameInput = '';
-        this.nameContainer = this.add.container(400, baseY + 30);
+        this.nameContainer = this.add.container(400, baseY + 25);
 
         const inputBg = this.add.graphics();
         inputBg.fillStyle(0x1e293b, 1);
-        inputBg.fillRoundedRect(-120, -16, 240, 32, 8);
+        inputBg.fillRoundedRect(-120, -14, 240, 28, 8);
         inputBg.lineStyle(2, 0x3b82f6);
-        inputBg.strokeRoundedRect(-120, -16, 240, 32, 8);
+        inputBg.strokeRoundedRect(-120, -14, 240, 28, 8);
 
         this.nameDisplay = this.add.text(0, 0, '_', {
-            fontFamily: 'Nunito', fontSize: '16px', fontStyle: 'bold', color: '#ffffff'
+            fontFamily: 'Nunito', fontSize: '15px', fontStyle: 'bold', color: '#ffffff'
         }).setOrigin(0.5);
 
         this.nameContainer.add([inputBg, this.nameDisplay]);
 
         // Virtual keyboard
-        this.createNameKeyboard(baseY + 70);
+        this.createNameKeyboard(baseY + 55);
 
         // Physical keyboard support
         this.input.keyboard.on('keydown', (event) => {
@@ -380,8 +380,45 @@ class FinalScene extends Phaser.Scene {
     }
 
     createNameKeyboard(keyboardY) {
+        // Keyboard layout: all rows use positive Y offsets from keyboardY (no negative)
+        // Row 0: Numbers (0-9)       y = 0
+        // Row 1: QWERTYUIOP          y = 28
+        // Row 2: ASDFGHJKL           y = 56
+        // Row 3: ZXCVBNM + DEL       y = 84
+        // Row 4: GUARDAR button      y = 116
         this.keyboard = this.add.container(400, keyboardY);
 
+        // Numbers row (0-9)
+        const numRow = '1234567890';
+        const numStartX = -((numRow.length - 1) * 30) / 2;
+        for (let i = 0; i < numRow.length; i++) {
+            const key = numRow[i];
+            const x = numStartX + i * 30;
+            const keyBtn = this.add.container(x, 0);
+            const keyBg = this.add.graphics();
+            keyBg.fillStyle(0x1e293b, 1);
+            keyBg.fillRoundedRect(-13, -12, 26, 24, 4);
+            keyBg.lineStyle(1, 0x475569);
+            keyBg.strokeRoundedRect(-13, -12, 26, 24, 4);
+            const keyText = this.add.text(0, 0, key, {
+                fontFamily: 'Nunito', fontSize: '11px', fontStyle: 'bold', color: '#94a3b8'
+            }).setOrigin(0.5);
+            keyBtn.add([keyBg, keyText]);
+            keyBtn.setSize(26, 24);
+            keyBtn.setInteractive();
+            keyBtn.on('pointerdown', () => {
+                if (this.nameInput.length < 10) {
+                    this.nameInput += key;
+                    this.nameDisplay.setText(this.nameInput + '_');
+                    audioManager.playClick();
+                }
+            });
+            keyBtn.on('pointerover', () => keyText.setColor('#ffffff'));
+            keyBtn.on('pointerout', () => keyText.setColor('#94a3b8'));
+            this.keyboard.add(keyBtn);
+        }
+
+        // Letter rows
         const keys = 'QWERTYUIOPASDFGHJKLZXCVBNM';
         const rows = [keys.slice(0, 10), keys.slice(10, 19), keys.slice(19, 26)];
 
@@ -390,20 +427,20 @@ class FinalScene extends Phaser.Scene {
             for (let i = 0; i < row.length; i++) {
                 const key = row[i];
                 const x = startX + i * 30;
-                const y = rowIndex * 32 - 32;
+                const y = 28 + rowIndex * 28;
 
                 const keyBtn = this.add.container(x, y);
                 const keyBg = this.add.graphics();
                 keyBg.fillStyle(0x1e293b, 1);
-                keyBg.fillRoundedRect(-13, -13, 26, 26, 4);
+                keyBg.fillRoundedRect(-13, -12, 26, 24, 4);
                 keyBg.lineStyle(1, 0x475569);
-                keyBg.strokeRoundedRect(-13, -13, 26, 26, 4);
+                keyBg.strokeRoundedRect(-13, -12, 26, 24, 4);
                 const keyText = this.add.text(0, 0, key, {
-                    fontFamily: 'Nunito', fontSize: '12px', fontStyle: 'bold', color: '#94a3b8'
+                    fontFamily: 'Nunito', fontSize: '11px', fontStyle: 'bold', color: '#94a3b8'
                 }).setOrigin(0.5);
 
                 keyBtn.add([keyBg, keyText]);
-                keyBtn.setSize(26, 26);
+                keyBtn.setSize(26, 24);
                 keyBtn.setInteractive();
 
                 keyBtn.on('pointerdown', () => {
@@ -421,18 +458,18 @@ class FinalScene extends Phaser.Scene {
             }
         });
 
-        // Delete button (right of last row)
-        const delBtn = this.add.container(125, 32);
+        // Delete button (right of ZXCVBNM row)
+        const delBtn = this.add.container(125, 84);
         const delBg = this.add.graphics();
         delBg.fillStyle(0x1e293b, 1);
-        delBg.fillRoundedRect(-25, -13, 50, 26, 4);
+        delBg.fillRoundedRect(-25, -12, 50, 24, 4);
         delBg.lineStyle(1, 0xef4444);
-        delBg.strokeRoundedRect(-25, -13, 50, 26, 4);
+        delBg.strokeRoundedRect(-25, -12, 50, 24, 4);
         const delText = this.add.text(0, 0, 'DEL', {
-            fontFamily: 'Nunito', fontSize: '11px', fontStyle: 'bold', color: '#ef4444'
+            fontFamily: 'Nunito', fontSize: '10px', fontStyle: 'bold', color: '#ef4444'
         }).setOrigin(0.5);
         delBtn.add([delBg, delText]);
-        delBtn.setSize(50, 26);
+        delBtn.setSize(50, 24);
         delBtn.setInteractive();
         delBtn.on('pointerdown', () => {
             this.nameInput = this.nameInput.slice(0, -1);
@@ -441,51 +478,16 @@ class FinalScene extends Phaser.Scene {
         });
         this.keyboard.add(delBtn);
 
-        // Numbers row (0-9)
-        const numRow = '1234567890';
-        const numStartX = -((numRow.length - 1) * 30) / 2;
-        for (let i = 0; i < numRow.length; i++) {
-            const key = numRow[i];
-            const x = numStartX + i * 30;
-            const y = -64;
-
-            const keyBtn = this.add.container(x, y);
-            const keyBg = this.add.graphics();
-            keyBg.fillStyle(0x1e293b, 1);
-            keyBg.fillRoundedRect(-13, -13, 26, 26, 4);
-            keyBg.lineStyle(1, 0x475569);
-            keyBg.strokeRoundedRect(-13, -13, 26, 26, 4);
-            const keyText = this.add.text(0, 0, key, {
-                fontFamily: 'Nunito', fontSize: '12px', fontStyle: 'bold', color: '#94a3b8'
-            }).setOrigin(0.5);
-
-            keyBtn.add([keyBg, keyText]);
-            keyBtn.setSize(26, 26);
-            keyBtn.setInteractive();
-
-            keyBtn.on('pointerdown', () => {
-                if (this.nameInput.length < 10) {
-                    this.nameInput += key;
-                    this.nameDisplay.setText(this.nameInput + '_');
-                    audioManager.playClick();
-                }
-            });
-            keyBtn.on('pointerover', () => keyText.setColor('#ffffff'));
-            keyBtn.on('pointerout', () => keyText.setColor('#94a3b8'));
-
-            this.keyboard.add(keyBtn);
-        }
-
-        // Big ENVIAR button at the bottom of the keyboard
-        const enterBtn = this.add.container(0, 68);
+        // Big GUARDAR button below the keyboard
+        const enterBtn = this.add.container(0, 116);
         const enterBg = this.add.graphics();
         enterBg.fillStyle(0x22c55e, 1);
-        enterBg.fillRoundedRect(-100, -15, 200, 30, 6);
-        const enterText = this.add.text(0, 0, 'GUARDAR PUNTUACION', {
-            fontFamily: 'Nunito', fontSize: '13px', fontStyle: 'bold', color: '#ffffff'
+        enterBg.fillRoundedRect(-110, -14, 220, 28, 6);
+        const enterText = this.add.text(0, 0, 'GUARDAR PUNTUACIÓN', {
+            fontFamily: 'Nunito', fontSize: '13px', fontStyle: '900', color: '#ffffff'
         }).setOrigin(0.5);
         enterBtn.add([enterBg, enterText]);
-        enterBtn.setSize(200, 30);
+        enterBtn.setSize(220, 28);
         enterBtn.setInteractive();
         enterBtn.on('pointerdown', () => {
             audioManager.playClick();
@@ -494,12 +496,12 @@ class FinalScene extends Phaser.Scene {
         enterBtn.on('pointerover', () => {
             enterBg.clear();
             enterBg.fillStyle(0x16a34a, 1);
-            enterBg.fillRoundedRect(-100, -15, 200, 30, 6);
+            enterBg.fillRoundedRect(-110, -14, 220, 28, 6);
         });
         enterBtn.on('pointerout', () => {
             enterBg.clear();
             enterBg.fillStyle(0x22c55e, 1);
-            enterBg.fillRoundedRect(-100, -15, 200, 30, 6);
+            enterBg.fillRoundedRect(-110, -14, 220, 28, 6);
         });
         this.keyboard.add(enterBtn);
     }
