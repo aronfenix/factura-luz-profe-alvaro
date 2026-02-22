@@ -526,6 +526,9 @@ class FinalScene extends Phaser.Scene {
     }
 
     async saveName() {
+        if (this.savingInProgress) return;
+        this.savingInProgress = true;
+
         if (this.nameInput.length === 0) this.nameInput = 'ANÓNIMO';
 
         const entry = {

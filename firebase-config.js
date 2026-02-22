@@ -18,7 +18,17 @@ class LeaderboardManager {
         this.isFirebaseEnabled = false;
         this.db = null;
         this.localStorageKey = 'profeAlvaroEnergiaLeaderboard';
+        this.cacheVersion = 2; // Incrementar para forzar limpieza de caché en todos los dispositivos
+        this.checkCacheVersion();
         this.initFirebase();
+    }
+
+    checkCacheVersion() {
+        const storedVersion = parseInt(localStorage.getItem(this.localStorageKey + '_v') || '0');
+        if (storedVersion < this.cacheVersion) {
+            localStorage.removeItem(this.localStorageKey);
+            localStorage.setItem(this.localStorageKey + '_v', String(this.cacheVersion));
+        }
     }
 
     initFirebase() {
@@ -63,6 +73,18 @@ class LeaderboardManager {
         }
     }
 
+    // Solo conserva la mejor puntuación de cada jugador
+    deduplicateByName(scores) {
+        const best = {};
+        scores.forEach(entry => {
+            const key = (entry.name || 'ANÓNIMO').trim().toUpperCase();
+            if (!best[key] || entry.score > best[key].score) {
+                best[key] = entry;
+            }
+        });
+        return Object.values(best).sort((a, b) => b.score - a.score);
+    }
+
     async getScores(limit = 50) {
         if (this.isFirebaseEnabled && this.db) {
             try {
@@ -76,9 +98,9 @@ class LeaderboardManager {
                     scores.push(child.val());
                 });
 
-                scores.sort((a, b) => b.score - a.score);
-                localStorage.setItem(this.localStorageKey, JSON.stringify(scores));
-                return scores;
+                const deduped = this.deduplicateByName(scores);
+                localStorage.setItem(this.localStorageKey, JSON.stringify(deduped));
+                return deduped;
             } catch (error) {
                 console.log('Error al obtener de Firebase, usando localStorage:', error);
                 return this.getFromLocalStorage();
@@ -90,8 +112,8 @@ class LeaderboardManager {
     saveToLocalStorage(entry) {
         const scores = this.getFromLocalStorage();
         scores.push(entry);
-        scores.sort((a, b) => b.score - a.score);
-        localStorage.setItem(this.localStorageKey, JSON.stringify(scores.slice(0, 50)));
+        const deduped = this.deduplicateByName(scores);
+        localStorage.setItem(this.localStorageKey, JSON.stringify(deduped.slice(0, 50)));
     }
 
     getFromLocalStorage() {
