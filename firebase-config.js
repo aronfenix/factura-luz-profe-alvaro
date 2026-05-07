@@ -17,6 +17,7 @@ class LeaderboardManager {
     constructor() {
         this.isFirebaseEnabled = false;
         this.db = null;
+        this.gameId = 'factura_energia';
         this.localStorageKey = 'profeAlvaroEnergiaLeaderboard';
         this.cacheVersion = 2; // Incrementar para forzar limpieza de caché en todos los dispositivos
         this.checkCacheVersion();
@@ -64,6 +65,7 @@ class LeaderboardManager {
                 const newScoreRef = this.db.ref('leaderboard_energia').push();
                 await newScoreRef.set({
                     ...entry,
+                    gameId: this.gameId,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
                 console.log('Puntuacion guardada en Firebase (energia)');
@@ -77,6 +79,7 @@ class LeaderboardManager {
     deduplicateByName(scores) {
         const best = {};
         scores.forEach(entry => {
+            if (entry.gameId && entry.gameId !== this.gameId) return;
             const key = (entry.name || 'ANÓNIMO').trim().toUpperCase();
             if (!best[key] || entry.score > best[key].score) {
                 best[key] = entry;
@@ -88,9 +91,10 @@ class LeaderboardManager {
     async getScores(limit = 50) {
         if (this.isFirebaseEnabled && this.db) {
             try {
+                const remoteLimit = Math.max(limit * 4, 200);
                 const snapshot = await this.db.ref('leaderboard_energia')
                     .orderByChild('score')
-                    .limitToLast(limit)
+                    .limitToLast(remoteLimit)
                     .once('value');
 
                 const scores = [];
@@ -98,7 +102,7 @@ class LeaderboardManager {
                     scores.push(child.val());
                 });
 
-                const deduped = this.deduplicateByName(scores);
+                const deduped = this.deduplicateByName(scores).slice(0, limit);
                 localStorage.setItem(this.localStorageKey, JSON.stringify(deduped));
                 return deduped;
             } catch (error) {
